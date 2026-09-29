@@ -1,8 +1,12 @@
-const { Sequelize } = require('sequelize')
-const config = require('../utils/config')
+const Event = require('./event')
+const Registration = require('./registration')
+const User = require('./user')
 
-const sequelize = new Sequelize(config.DATABASE_URL, {
-  logging: false
-})
+Event.hasMany(Registration)
+Registration.belongsTo(Event)
 
-module.exports = sequelize
+module.exports = {
+  Event,
+  Registration,
+  User
+}

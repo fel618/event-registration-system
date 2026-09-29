@@ -1,10 +1,14 @@
 const app = require('./app')
 const config = require('./utils/config')
-const sequelize = require('./models')
+const sequelize = require('./models/connection')
+
+require('./models')
 
 const start = async () => {
   try {
     await sequelize.authenticate()
+
+    await sequelize.sync({ alter: true })
 
     console.log('Connected to database')
 
