@@ -1,4 +1,5 @@
 const express = require('express')
+const eventsRouter = require('./controllers/events')
 
 const app = express()
 
@@ -9,5 +10,7 @@ app.get('/', (req, res) => {
     message: 'Event registration API'
   })
 })
+
+app.use('/api/events', eventsRouter)
 
 module.exports = app
