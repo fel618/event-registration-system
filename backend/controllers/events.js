@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Event } = require('../models')
+const { Event, Registration } = require('../models')
 
 router.get('/', async (req, res, next) => {
   try {
@@ -20,7 +20,14 @@ router.get('/:id', async (req, res, next) => {
       })
     }
 
-    const event = await Event.findByPk(id)
+    const event = await Event.findByPk(id, {
+      include: [
+        {
+          model: Registration,
+          attributes: ['id', 'name']
+        }
+      ]
+    })
 
     if (!event) {
       return res.status(404).json({
@@ -28,7 +35,12 @@ router.get('/:id', async (req, res, next) => {
       })
     }
 
-    res.json(event)
+    const eventData = event.toJSON()
+
+    res.json({
+      ...eventData,
+      participantCount: eventData.registrations.length
+    })
   } catch (error) {
     next(error)
   }

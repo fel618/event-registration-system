@@ -1,5 +1,6 @@
 const express = require('express')
 const eventsRouter = require('./controllers/events')
+const registrationsRouter = require('./controllers/registrations')
 
 const app = express()
 
@@ -12,5 +13,6 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/events', eventsRouter)
+app.use('/api/registrations', registrationsRouter)
 
 module.exports = app
